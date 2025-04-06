@@ -1,0 +1,173 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+
+/* filepath: c:\Users\geovi\OneDrive\Documents\2nd sem 2024-2025\mobile\WeatherForecast-main (2)\WeatherForecast-main\src\global.scss */
+
+/* Light Theme (default) */
+/* Light Theme (default) */
+body[color-theme='light'] {
+  --ion-background-color: #eaeaea; /* Slightly darker background for light mode */
+  --ion-text-color: #000000; /* Black text for contrast */
+  --ion-toolbar-background: #f5f5f5; /* Light toolbar background */
+  --ion-toolbar-color: #000000; /* Black toolbar text */
+
+  /* Ensure content background matches the theme */
+  ion-content {
+      --background: var(--ion-background-color); /* Match the background color */
+  }
+
+  /* Brighten cards for better contrast */
+  ion-card {
+      --background: #ffffff; /* Bright white card background */
+      --color: var(--ion-text-color); /* Black text for cards */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+      border-radius: 8px; /* Rounded corners for cards */
+  }
+
+  /* Modal styling for light mode */
+  .modal-content {
+      background-color: #ffffff; /* Bright white background for modal */
+      color: #000000; /* Black text for readability */
+      border-radius: 8px;
+      padding: 16px;
+  }
+
+  .modal-content h2 {
+      color: #000000; /* Ensure modal title is black */
+  }
+
+  .modal-content p {
+      color: #333333; /* Slightly darker text for descriptions */
+  }
+
+  .modal-content button {
+      background-color: #f0f0f0; /* Light button background */
+      color: #000000; /* Black text for buttons */
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+
+  .modal-content button:hover {
+      background-color: #e0e0e0; /* Slightly darker on hover */
+  }
+}
+  
+/* Dark Theme */
+body[color-theme='dark'] {
+    --ion-background-color: #1e1e1e;
+    --ion-text-color: #ffffff;
+    --ion-toolbar-background: #2c2c2c;
+    --ion-toolbar-color: #ffffff;
+  
+    /* Ensure time text is visible in dark theme */
+    ion-card-title, ion-card-header, ion-card-content {
+      color: #ffffff; /* Set text color to white */
+    }
+
+    ion-content {
+      --background: var(--ion-background-color); /* Match the background color */
+    }
+    
+    ion-card {
+      --background: var(--ion-background-color); /* Match the background color */
+      --color: var(--ion-text-color); /* Match the text color */
+    }
+  
+    /* Modal styling for dark mode */
+    .modal-content {
+      background-color: #2c2c2c; /* Dark background for modal */
+      color: #ffffff; /* White text for readability */
+      border-radius: 8px;
+      padding: 16px;
+    }
+  
+    .modal-content h2 {
+      color: #ffffff; /* Ensure modal title is white */
+    }
+  
+    .modal-content p {
+      color: #d3d3d3; /* Slightly lighter text for descriptions */
+    }
+  
+    .modal-content button {
+      background-color: #444444; /* Dark button background */
+      color: #ffffff; /* White text for buttons */
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+    .modal-content button:hover {
+      background-color: #555555; /* Slightly lighter on hover */
+    }
+    
+    body[color-theme='light'] .red-button {
+        background-color: #ff4d4d; /* Red background */
+        color: #fff; /* White text */
+        border: none; /* Remove default border */
+        border-radius: 8px; /* Rounded edges */
+        padding: 10px 20px; /* Add padding for better spacing */
+        font-size: 16px; /* Adjust font size */
+        cursor: pointer; /* Add pointer cursor */
+      }
+      
+      body[color-theme='light'] .red-button:hover {
+        background-color: #e60000; /* Darker red on hover */
+      }
+      
+      /* Dark Theme */
+      body[color-theme='dark'] .red-button {
+        background-color: #ff4d4d; /* Red background for dark mode */
+        color: #fff; /* White text for dark mode */
+        border: none; /* Remove default border */
+        border-radius: 8px; /* Rounded edges */
+        padding: 10px 20px; /* Add padding for better spacing */
+        font-size: 16px; /* Adjust font size */
+        cursor: pointer; /* Add pointer cursor */
+      }
+      
+      body[color-theme='dark'] .red-button:hover {
+        background-color: #e60000; /* Darker red on hover in dark mode */
+      }
+    
+  }
+ 

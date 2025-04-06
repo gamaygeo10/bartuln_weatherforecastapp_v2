@@ -1,0 +1,152 @@
+ion-content {
+  text-align: center;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+  color: black;
+}
+
+.rounded-button {
+  border-radius: 20px;
+  background: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.rounded-button:hover {
+  background: #0056b3;
+}
+
+ion-menu {
+  z-index: 1000;
+}
+
+.offline-banner {
+  background-color: #ffc107;
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.theme-switch,
+.temperature-switch {
+  display: flex;
+  gap: 10px;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+ion-card {
+  --background: var(--ion-background-color);
+  --color: var(--ion-text-color);
+  text-align: left;
+  padding: 10px;
+  min-height: 200px;
+}
+
+ion-card-content p {
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.current-weather {
+  background: var(--ion-background-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  flex: 1;
+}
+
+.current-weather h3 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.current-weather p {
+  margin: 4px 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.search-heading,
+.current-location-heading {
+  text-align: left;
+  color: var(--ion-text-color);
+}
+
+.search-heading {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.current-location-heading {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.current-weather-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.map-icon {
+  font-size: 3rem;
+  color: var(--ion-text-color);
+  align-self: center;
+  margin-left: auto;
+  margin-right: 80px;
+}
+
+.red-button {
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.red-button:hover {
+  background-color: #e60000;
+}
