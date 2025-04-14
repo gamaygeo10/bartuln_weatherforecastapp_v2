@@ -32,7 +32,7 @@ export class HomePage implements OnInit {
   };
 
   // api keys
-  private apiKey: string = 'e14583782c69767317d8f2ca893345d8';
+  private apiKey: string = 'diri ibutang api key';
   private weatherUrl: string = 'https://api.openweathermap.org/data/2.5/weather';
   private forecastUrl: string = 'https://api.openweathermap.org/data/2.5/forecast';
 
