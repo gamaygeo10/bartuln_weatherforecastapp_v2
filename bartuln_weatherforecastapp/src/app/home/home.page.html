@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>GeoLocatortulin Weather Forecast App</ion-title>
+    <ion-title>GeoLocatulin Weather Forecast App</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleSettings()">
         <ion-icon name="settings-outline"></ion-icon>
@@ -8,6 +8,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-menu side="end" menuId="settingsMenu" contentId="main-content">
   <ion-header>
@@ -67,60 +68,115 @@
 </ion-menu>
 
 <ion-content [fullscreen]="true" id="main-content">
-  <div id="container">
-    <div *ngIf="!isOnline" class="offline-banner">
-      <p>You are offline. Displaying cached data.</p>
+  <div *ngIf="!isOnline" class="offline-banner">
+    <p>Offline Mode: Some features may not be available.</p>
+  </div>
+  <div class="current-weather-container">
+    <div class="current-weather">
+      <ion-card class="curr-forecast-card">
+        <ion-card-content>
+          <h3 class="searched-weather-title">{{ 'Calero' }}, {{ getCountryName(currentWeather.sys.country) }}</h3>
+          <div class="forecast-row">
+            <div class="forecast-column">
+              <p class="data"><strong>{{ currentWeather.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</strong></p>
+              <p class="label">Temp</p>
+            </div>
+            <div class="forecast-column">
+              <p class="data"><strong>{{ currentWeather.main.humidity }}%</strong></p>
+              <p class="label">Humidity</p>
+            </div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-column">
+              <p class="data"><strong>{{ currentWeather.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</strong></p>
+              <p class="label">Wind Speed</p>
+            </div>
+            <div class="forecast-column">
+              <p class="data"><strong>{{ currentWeather.main.pressure }} hPa</strong></p>
+              <p class="label">Pressure</p>
+            </div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-column">
+              <p class="data"><strong>{{ currentWeather.weather[0].description }}</strong></p>
+              <p class="label">Condition</p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
-    <div class="current-weather-container">
-      <div class="current-weather">
-        <p>Current Location:</p>
-        <h3>{{ currentWeather.name }}, {{ getCountryName(currentWeather.sys.country) }}</h3> <!-- Display city and full country name -->
-        <p>🌡️ Temp: {{ currentWeather.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</p>
-        <p>💧 Humidity: {{ currentWeather.main.humidity }}%</p>
-        <p>🌬️ Wind Speed: {{ currentWeather.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</p>
-        <p>📏 Pressure: {{ currentWeather.main.pressure }} hPa</p>
-        <p>🌥️ Condition: {{ currentWeather.weather[0].description }}</p>
-      </div>
-      <ion-icon name="map-outline" class="map-icon"></ion-icon>
-    </div>
+  </div>
+  
 
     <p class="search-heading">Search for a Location:</p>
-<ion-item>
-  <ion-input [(ngModel)]="searchQuery" placeholder="Enter City"></ion-input>
-</ion-item>
+    <ion-item class="rounded-input" lines="none">
+      <ion-input [(ngModel)]="searchQuery" placeholder="Enter City"></ion-input>
+    </ion-item>
+    
 <button class="rounded-button" (click)="getWeatherForSearch()">Search</button>
 
-    <h2>Today's Forecast (hourly)</h2>
-<div class="forecast-grid" *ngIf="currentForecast">
-  <ng-container *ngFor="let hour of currentForecast.list.slice(0, 8)">
-    <ion-card>
+<h2>Today's Hourly Forecast</h2>
+<ion-slides *ngIf="currentForecast" class="forecast-slider" [options]="slideOpts">
+  <ion-slide *ngFor="let hour of currentForecast.list.slice(0, 8); let i = index">
+    <ion-card class="hourly-forecast-card">
       <ion-card-header>
-        <ion-card-title>{{ hour.dt_txt | date:'shortTime' }}</ion-card-title>
+        <ion-card-title>{{ hourdt_txt(i) }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>🌡️ Temp: {{ hour.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</p>
-        <p>💧 Humidity: {{ hour.main.humidity }}%</p>
-        <p>🌬️ Wind Speed: {{ hour.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</p>
-        <p>📏 Pressure: {{ hour.main.pressure }} hPa</p>
-        <p>🌥️ Condition: {{ hour.weather[0].description }}</p>
+        <div class="forecast-row">
+          <div class="forecast-column">
+            <p class="data"><strong>{{ hour.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</strong></p>
+            <p class="label">Temp</p>
+          </div>
+          <div class="forecast-column">
+            <p class="data"><strong>{{ hour.main.humidity }}%</strong></p>
+            <p class="label">Humidity</p>
+          </div>
+        </div>
+        <div class="forecast-row">
+          <div class="forecast-column">
+            <p class="data"><strong>{{ hour.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</strong></p>
+            <p class="label">Wind Speed</p>
+          </div>
+          <div class="forecast-column">
+            <p class="data"><strong>{{ hour.main.pressure }} hPa</strong></p>
+            <p class="label">Pressure</p>
+          </div>
+        </div>
       </ion-card-content>
     </ion-card>
-  </ng-container>
-</div>
+  </ion-slide>
+</ion-slides>
 
-<h2>5-Day Forecast</h2>
+
+<h2>5 Day Forecast</h2>
 <div class="forecast-grid" *ngIf="currentForecast">
   <ng-container *ngFor="let day of currentForecast.list; let i = index">
-    <ion-card *ngIf="i % 8 === 0">
+    <ion-card *ngIf="i % 8 === 0" class="five-day-forecast-card">
       <ion-card-header>
         <ion-card-title>{{ day.dt_txt | date:'mediumDate' }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>🌡️ Temp: {{ day.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</p>
-        <p>💧 Humidity: {{ day.main.humidity }}%</p>
-        <p>🌬️ Wind Speed: {{ day.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</p>
-        <p>📏 Pressure: {{ day.main.pressure }} hPa</p>
-        <p>🌥️ Condition: {{ day.weather[0].description }}</p>
+        <div class="forecast-row">
+          <div class="forecast-column">
+            <p class="data"><strong>{{ day.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</strong></p>
+            <p class="label">Temp</p>
+          </div>
+          <div class="forecast-column">
+            <p class="data"><strong>{{ day.main.humidity }}%</strong></p>
+            <p class="label">Humidity</p>
+          </div>
+        </div>
+        <div class="forecast-row">
+          <div class="forecast-column">
+            <p class="data"><strong>{{ day.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</strong></p>
+            <p class="label">Wind Speed</p>
+          </div>
+          <div class="forecast-column">
+            <p class="data"><strong>{{ day.main.pressure }} hPa</strong></p>
+            <p class="label">Pressure</p>
+          </div>
+        </div>
       </ion-card-content>
     </ion-card>
   </ng-container>
@@ -129,15 +185,39 @@
 <div *ngIf="showModal" class="modal">
   <div class="modal-content">
     <div *ngIf="searchedWeather">
-      <h2>Weather in {{ searchedWeather.name }}, {{ getCountryName(searchedWeather.sys.country) }}</h2>
-      <p>🌡️ Temp: {{ searchedWeather.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</p>
-      <p>💧 Humidity: {{ searchedWeather.main.humidity }}%</p>
-      <p>🌬️ Wind Speed: {{ searchedWeather.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</p>
-      <p>📏 Pressure: {{ searchedWeather.main.pressure }} hPa</p>
-      <p>🌥️ Condition: {{ searchedWeather.weather[0].description }}</p>
+      <ion-card class="curr-forecast-card">
+        <ion-card-content>
+          <h3 class="searched-weather-title">{{ searchedWeather.name }}, {{ getCountryName(searchedWeather.sys.country) }}</h3>
+          <div class="forecast-row">
+            <div class="forecast-column">
+              <p class="data"><strong>{{ searchedWeather.main.temp }}°{{ temperatureUnit === 'metric' ? 'C' : 'F' }}</strong></p>
+              <p class="label">Temp</p>
+            </div>
+            <div class="forecast-column">
+              <p class="data"><strong>{{ searchedWeather.main.humidity }}%</strong></p>
+              <p class="label">Humidity</p>
+            </div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-column">
+              <p class="data"><strong>{{ searchedWeather.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</strong></p>
+              <p class="label">Wind Speed</p>
+            </div>
+            <div class="forecast-column">
+              <p class="data"><strong>{{ searchedWeather.main.pressure }} hPa</strong></p>
+              <p class="label">Pressure</p>
+            </div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-column">
+              <p class="data"><strong>{{ searchedWeather.weather[0].description }}</strong></p>
+              <p class="label">Condition</p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
     <button class="red-button" (click)="closeModal()">Close</button>
   </div>
 </div>
-  </div>
 </ion-content>
